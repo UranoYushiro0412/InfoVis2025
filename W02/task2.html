@@ -1,0 +1,21 @@
+<html>
+    <head>
+	<title>W02: Task 2</title>
+    </head>
+    <body>
+	<script src="task1.js"></script>
+    <p id="target"></p>
+	<script>
+     var x = 5, y = 4, z = 8;
+	 var v = new Vec3( x, y, z );
+     var min = v.min(); // 4 (output value)
+     var mid = v.mid(); // 5 (output value)
+     var max = v.max(); // 8 (output value)
+     document.getElementById("target").innerHTML = " x = " + v.x + ", y = " + v.y +", z = " + v.z +"<br>";
+     document.getElementById("target").innerHTML += " ------------------------ " + "<br>";
+     document.getElementById("target").innerHTML += " min = " + min + "<br>";
+     document.getElementById("target").innerHTML += " mid = " + mid + "<br>";
+     document.getElementById("target").innerHTML += " max = " + max + "<br>";
+	</script>
+    </body>
+</html>

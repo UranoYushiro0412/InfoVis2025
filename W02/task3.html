@@ -1,0 +1,32 @@
+<html>
+    <head>
+	<title>W02: Task 3</title>
+    </head>
+    <body>
+	<script src="task1.js"></script>
+    <p id="target"></p>
+	<script>
+     var x0 = 1, y0 = 1, z0 = 1;
+     var x1 = 1, y1 = 3, z1 = 3;
+     var x2 = 3, y2 = 1, z2 = 5;
+	 var v0 = new Vec3( x0, y0, z0 );
+     var v1 = new Vec3( x1, y1, z1 );
+     var v2 = new Vec3( x2, y2, z2 );
+     document.getElementById("target").innerHTML = " v0.x = " + v0.x + ", v0.y = " + v0.y +", v0.z = " + v0.z +"<br>";
+     document.getElementById("target").innerHTML += " v1.x = " + v1.x + ", v1.y = " + v1.y +", v1.z = " + v1.z +"<br>";
+     document.getElementById("target").innerHTML += " v2.x = " + v2.x + ", v2.y = " + v2.y +", v2.z = " + v2.z +"<br>";
+
+     function AreaOfTriangle( v0, v1, v2 )
+     {
+        var v0v1 = v1.sub( v0 );
+        var v0v2 = v2.sub( v0 );
+        var cross =  v0v1.cross( v0v2 )
+        return cross.length() / 2;
+     } 
+
+     S = AreaOfTriangle( v0, v1, v2 );
+     document.getElementById("target").innerHTML += " ------------------------ " + "<br>";
+     document.getElementById("target").innerHTML += " S = " + S + "<br>";
+	</script>
+    </body>
+</html>
