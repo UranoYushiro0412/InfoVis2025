@@ -1,4 +1,7 @@
-label,width,color
-"Osaka",100,"red"
-"Nara",20,"green"
-"Hyougo",70,"blue"
+label,population,color
+"Osaka",8837685,"skyblue"
+"Nara",1324473,"brown"
+"Hyougo",546.5002,"orange"
+"Kyoto",2578087,"violet"
+"Siga",1413610,"green"
+"Wakayama",922584,"darkred"
