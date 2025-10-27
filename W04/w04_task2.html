@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>W04: Task 2</title>
+    </head>
+    <body>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script>
+	 var titlespace = 50;
+	 var padding = 15;
+	 var height = 30;
+	 var textspace = 100;
+	 var scale = 0.00003;
+	 var svg = d3.select("body").append("svg")
+	 	.attr("width", 500) 
+    	.attr("height", 1000);
+	 const timestamp = new Date().getTime();
+	 d3.csv("https://UranoYushiro0412.github.io/InfoVis2025/W04/w04_task2.csv" + "?t=" + timestamp, function(data){
+	     svg.selectAll("rect")
+			.data(data)
+	        .enter()
+	        .append("rect")
+			.attr("x", padding + textspace)
+			.attr("y", function(d,i){ return titlespace + padding + i * ( height + padding ); })
+	        .attr("width", function(d){ return d.population * scale; })
+			.attr("height", height)
+	        .style("fill", function(d){ return d.color; });
+		svg.selectAll("text")
+			.data(data)
+	        .enter()
+	        .append("text")
+			.attr("x", padding)
+			.attr("y", function(d,i){ return titlespace + padding + height / 2 + 7 + i * ( height + padding ); })
+	        .text(function(d){ return d.label; })
+			.style("font-size", "18px")
+			.attr("fill", "black");
+		svg.append("text")
+			.attr("x", 40)
+			.attr("y", 40)
+	        .text("Kansai Population")
+			.style("font-size", "36px")
+			.attr("fill", "black");
+	 } );
+	</script>
+    </body>
+</html>
