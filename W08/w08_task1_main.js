@@ -66,15 +66,15 @@ class BarChart {
             .ticks(5)
             .tickSizeOuter(0);
 
-        self.yaxis_group = self.chart.append('g')
+        self.yaxis_group = self.chart.append('g');
 
         self.svg.append("text")
-        .attr("x", self.config.width / 2)
-        .attr("y", self.config.margin.top / 2)
-        .attr("text-anchor", "middle")
-        .style("font-size", "24px")
-        .style("font-weight", "bold")
-        .text(self.config.title);
+            .attr("x", self.config.width / 2)
+            .attr("y", self.config.margin.top / 2)
+            .attr("text-anchor", "middle")
+            .style("font-size", "24px")
+            .style("font-weight", "bold")
+            .text(self.config.title);
 
         self.svg.append("text")
             .attr("x", self.config.margin.left + self.inner_width / 2)
