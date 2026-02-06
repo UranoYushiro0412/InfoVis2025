@@ -220,4 +220,18 @@ class EarthquakeMap {
     clearQuakes() {
         this.quake_layer.selectAll('g.quake-group').interrupt().remove();
     }
+
+    pauseTransitions() {
+        this.quake_layer.selectAll('g.quake-group circle').interrupt();
+    }
+
+    resumeTransitions() {
+        // Restart the fade-out/shrink transition for any frozen circles
+        this.quake_layer.selectAll('g.quake-group circle')
+            .transition()
+            .duration(500)
+            .attr('r', 0)
+            .attr('opacity', 0)
+            .remove();
+    }
 }

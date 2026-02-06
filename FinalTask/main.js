@@ -88,8 +88,13 @@ Promise.all([
 function togglePlay() {
     is_playing = !is_playing;
     d3.select('#play-pause').text(is_playing ? 'Pause' : 'Play');
-    if (is_playing) animate();
-    else cancelAnimationFrame(animation_id);
+    if (is_playing) {
+        map_view.resumeTransitions();
+        animate();
+    } else {
+        cancelAnimationFrame(animation_id);
+        map_view.pauseTransitions(); // Freeze current animations
+    }
 }
 
 function resetAnimation() {
