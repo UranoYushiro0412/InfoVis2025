@@ -95,8 +95,12 @@
             background-color: #004d40;
         }
 
-        #play-pause {
-            min-width: 120px; /* 文字数や太字の影響で幅が変わらないように余裕を持って固定 */
+        #play-pause,
+        #reset {
+            width: 90px;
+            /* PlayボタンとResetボタンを同じ幅に揃える */
+            padding-left: 0;
+            padding-right: 0;
             text-align: center;
         }
 
@@ -129,7 +133,6 @@
             margin-left: 34px;
             /* Match left margin of timeline axis */
         }
-
     </style>
 </head>
 
