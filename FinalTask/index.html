@@ -125,17 +125,6 @@
             /* Match left margin of timeline axis */
         }
 
-        /* PCの大型モニター用：画面の縦幅に合わせてアプリ全体をズームして大きく表示する */
-        @media (min-width: 1201px) {
-            .container {
-                /* アプリ自体の元の高さ(約900px)を基準に、画面の高さ(vh)の90%にスッポリ収まる倍数まで自動ズームする */
-                zoom: calc(90vh / 900);
-            }
-
-            h1 {
-                zoom: calc(90vh / 900);
-            }
-        }
     </style>
 </head>
 
@@ -177,6 +166,22 @@
     <script src="Timeline.js"></script>
     <script src="SidePanel.js"></script>
     <script src="main.js"></script>
+    <script>
+        // PCの巨大モニター用：画面の高さに合わせてアプリ全体を自動ズーム
+        function fitToScreen() {
+            if (window.innerWidth > 1200) {
+                // 画面の高さの90%をベース(900px)で割って倍率を計算
+                const scale = (window.innerHeight * 0.9) / 900;
+                document.querySelector('.container').style.zoom = scale;
+                document.querySelector('h1').style.zoom = scale;
+            } else {
+                document.querySelector('.container').style.zoom = 1;
+                document.querySelector('h1').style.zoom = 1;
+            }
+        }
+        window.addEventListener('resize', fitToScreen);
+        fitToScreen();
+    </script>
 </body>
 
 </html>
