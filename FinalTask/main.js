@@ -28,24 +28,36 @@ Promise.all([
     japan_geo = geoData;
     const findKey = (d, searchTerms) => Object.keys(d).find(k => searchTerms.some(term => k.includes(term)));
 
+    // 1. 初期のデータロード時間の短縮: 列の特定を最初の1行目のみで行う
+    const sampleRow = raw_data[0] || {};
+    const dateKey = findKey(sampleRow, ['発生日']);
+    const timeKey = findKey(sampleRow, ['時刻']);
+    const latKey = findKey(sampleRow, ['緯度']);
+    const lonKey = findKey(sampleRow, ['経度']);
+    const magKey = findKey(sampleRow, ['M', 'Ｍ']);
+    const locKey = findKey(sampleRow, ['震央']);
+    const intKey = findKey(sampleRow, ['震度']);
+
     input_data = raw_data.map((d, i) => {
-        const dateKey = findKey(d, ['発生日']);
-        const timeKey = findKey(d, ['時刻']);
-        const latKey = findKey(d, ['緯度']);
-        const lonKey = findKey(d, ['経度']);
-        const magKey = findKey(d, ['M', 'Ｍ']);
-        const locKey = findKey(d, ['震央']);
-        const intKey = findKey(d, ['震度']);
         const lat = parseCoord(d[latKey]);
         const lon = parseCoord(d[lonKey]);
         const mag = parseFloat(d[magKey]);
-        let timeVal = d[timeKey] || "";
+        let timeVal = d[timeKey] || "00:00";
         if (timeVal.split(':').length === 2) timeVal = "00:" + timeVal;
+        
+        // 3. iPhone (Safari) 対策：文字列パースに頼らず、数値を指定して確実にDateを生成
+        const [year, month, day] = d[dateKey].split('/').map(Number);
+        const timeParts = timeVal.split(':');
+        const hour = parseInt(timeParts[0]) || 0;
+        const minute = parseInt(timeParts[1]) || 0;
+        const second = parseInt(timeParts[2]) || 0; // ".3" などの小数は parseInt で切り捨てられる
+        const safeDate = new Date(year, month - 1, day, hour, minute, second);
+
         return {
             id: i,
             date: d[dateKey],
             time_str: d[timeKey],
-            timestamp: new Date(d[dateKey] + ' ' + timeVal),
+            timestamp: safeDate,
             latitude: lat,
             longitude: lon,
             magnitude: mag || 0,
@@ -126,8 +138,9 @@ function updateStep(manual = false) {
     if (manual) {
         // If manually scrubbing, reset the search to find the START of the window
         const windowStartSearch = new Date(current_time.getTime() - time_step);
-        current_data_index = input_data.findIndex(d => d.timestamp >= windowStartSearch);
-        if (current_data_index === -1) current_data_index = input_data.length;
+        // 2. シーク（スライダー操作）時の探索の高速化: O(N) の findIndex から O(log N) の二分探索に変更
+        const bisectDate = d3.bisector(d => d.timestamp).left;
+        current_data_index = bisectDate(input_data, windowStartSearch);
     }
 
     const windowStart = new Date(current_time.getTime() - time_step);
