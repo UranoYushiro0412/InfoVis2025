@@ -79,7 +79,7 @@
         }
 
         button {
-            padding: 16px 16px;
+            padding: 16px 14px;
             /* 縦をさらに大きく、横幅はスッキリさせる */
             cursor: pointer;
             border: none;
@@ -123,6 +123,18 @@
             /* Match inner width of timeline axis */
             margin-left: 34px;
             /* Match left margin of timeline axis */
+        }
+
+        /* PCの大型モニター用：画面の縦幅に合わせてアプリ全体をズームして大きく表示する */
+        @media (min-width: 1201px) {
+            .container {
+                /* アプリ自体の元の高さ(約900px)を基準に、画面の高さ(vh)の90%にスッポリ収まる倍数まで自動ズームする */
+                zoom: calc(90vh / 900);
+            }
+
+            h1 {
+                zoom: calc(90vh / 900);
+            }
         }
     </style>
 </head>
